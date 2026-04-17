@@ -1,0 +1,17 @@
+[
+  {
+    "idProducto": 1,
+    "nombre": "Lavandina Ayudín Original 4 litros",
+    "categorias": ["Lavandinas", "Lavandinas líquidas"],
+    "stockminimo": 10,
+    "puntoPedido": 20,
+  },
+  {
+    "idProducto": 2,
+    "nombre": "Lavandina Ayudín Triple Poder 4 litros",
+    "precio": 63500,
+    "categorias": ["Lavandinas", "Lavandinas líquidas"],
+    "stock": 230,
+    "FechaVencimiento": "2026-12-31"
+  }
+]

@@ -1,48 +1,50 @@
 [
   {
-    "id": 1,
-    "nombre": "Notebook Lenovo IdeaPad 15",
-    "precio": 699000,
-    "categorias": ["Tecnología", "Computadoras", "Notebooks"],
-    "stock": 25
+    "idLote": 1,
+    "nombre": "Lavandina Original Ayudín 4 litros",
+    "precio": 5500,
+    "categorias": ["Lavandinas", "Lavandinas líquidas"],
+    "stock": 300,
+    "FechaVencimiento": "2026-12-31"
   },
   {
-    "id": 2,
-    "nombre": "Auriculares Bluetooth Sony WH-CH520",
-    "precio": 85000,
-    "categorias": ["Tecnología", "Audio", "Accesorios"],
-    "stock": 230
+    "idLote": 2,
+    "nombre": "Lavandina Ayudín Triple Poder 4 litros",
+    "precio": 63500,
+    "categorias": ["Lavandinas", "Lavandinas líquidas"],
+    "stock": 230,
+    "FechaVencimiento": "2026-12-31"
   },
   {
-    "id": 3,
+    "idLote": 3,
     "nombre": "Cafetera Oster Programable",
     "precio": 120000,
     "categorias": ["Hogar", "Cocina", "Electrodomésticos"],
     "stock": 30
   },
   {
-    "id": 4,
+    "idLote": 4,
     "nombre": "Zapatillas Nike Revolution 6",
     "precio": 95000,
     "categorias": ["Moda", "Calzado", "Deportes"],
     "stock": 90
   },
   {
-    "id": 5,
+    "idLote": 5,
     "nombre": "Silla Ergonómica Gamer RGB",
     "precio": 185000,
     "categorias": ["Hogar", "Oficina", "Gaming"],
     "stock": 15 
   },
   {
-    "id": 1763685987620,
+    "idLote": 6,
     "nombre": "Mouse Pad Gamer XL",
     "precio": 1000,
     "categorias": ["Tecnología", "Gaming", "Accesorios"],
     "stock": 50
   },
   {
-    "id": 1763686078888,
+    "idLote": 7,
     "nombre": "Cable USB - Type C 1 metro",
     "precio": 1000,
     "categorias": ["Tecnología", "Accesorios"],
