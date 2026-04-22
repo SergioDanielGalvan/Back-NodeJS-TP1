@@ -1,10 +1,13 @@
 // app.js
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+app.use(cors());
 
 const app = express();
 
@@ -21,6 +24,8 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
   res.render('index', { titulo: 'TodoStock S.A.' });
 });
+
+app.use("/productos", productosRouter);
 
 // Manejo de errores 404
 app.use((req, res) => {

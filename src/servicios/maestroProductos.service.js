@@ -11,7 +11,7 @@ class MaestroProductosService {
 
   async crear(datos) {
     // Validar campos obligatorios
-    if (!datos.nombre || !datos.categoria || !datos.stockMinimo) {
+    if ( !datos.nombre || !datos.categoria || !datos.stockMinimo ) {
       throw new Error('Faltan campos obligatorios');
     }
     return await repo.guardar(datos);

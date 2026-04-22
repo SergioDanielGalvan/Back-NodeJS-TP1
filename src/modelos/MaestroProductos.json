@@ -33,7 +33,7 @@
     },
     {
         "idProducto": 5,
-        "nombre": "Detergente Concentrado Pomelo AlaLA 500ml",
+        "nombre": "Detergente Concentrado Limón Ala 500ml",
         "categorias": ["Cocina", "Detergentes"],
         "EAN": "7791290794306",
         "stockminimo": 100,

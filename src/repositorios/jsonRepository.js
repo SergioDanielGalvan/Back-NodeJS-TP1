@@ -1,3 +1,7 @@
+/*
+  Para una siguiente fase, SDG 22/04/2026
+*/
+
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';

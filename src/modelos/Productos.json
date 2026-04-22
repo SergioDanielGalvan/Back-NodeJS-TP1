@@ -16,5 +16,11 @@
     "precio": 2700,
     "stock": 30,
     "FechaVencimiento": "2026-09-15"
+  },
+  {
+    "idLote": 5,
+    "precio": 3460,
+    "stock": 30,
+    "FechaVencimiento": "2026-09-15"
   }
 ]
