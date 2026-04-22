@@ -1,3 +1,7 @@
+/*
+  Para una siguiente fase, SDG 21/04/2026
+*/
+
 import repo from '../repositories/maestroProductos.repository.js';
 
 class MaestroProductosService {

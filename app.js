@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
 });
 
 app.use("/productos", productosRouter);
+app.use("/maestroproductos", productosRouter);
 
 // Manejo de errores 404
 app.use((req, res) => {
