@@ -21,6 +21,7 @@ router.get("/productos/:id", getProductoById);
 router.get("/productos/nombre/:nombre", getProductoByNombre);
 router.get("/productos/categoria", getAllProductosByCategoria);
 
+
 // Rutas de productos Privadas
 router.get("/productos/stock", getAllProductosWithStock);
 router.post("/productos", createProducto);

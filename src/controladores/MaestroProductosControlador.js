@@ -1,0 +1,1 @@
+import * as model from "../modelos/MaestroProductos.js";

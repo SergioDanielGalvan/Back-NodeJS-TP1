@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
 app.use("/productos", productosRouter);
 app.use("/maestroproductos", productosRouter);
 
+
 // Manejo de errores 404
 app.use((req, res) => {
   res.status(404).render('404', { titulo: 'Página no encontrada' });
