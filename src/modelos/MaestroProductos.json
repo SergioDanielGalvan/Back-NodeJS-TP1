@@ -40,8 +40,8 @@
       "Detergentes"
     ],
     "EAN": "7790990003398",
-    "stockminimo": 50,
-    "puntoPedido": 70
+    "stockminimo": "58",
+    "puntoPedido": "70"
   },
   {
     "idProducto": 5,
@@ -55,17 +55,6 @@
     "puntoPedido": 120
   },
   {
-    "idProducto": 6,
-    "nombre": "Limpiador Líquido Para Pisos Procenex Lavanda 1.8l",
-    "categorias": [
-      "Pisos y Superficies",
-      "Detergentes"
-    ],
-    "EAN": "7791130683760",
-    "stockminimo": 100,
-    "puntoPedido": 120
-  },
-  {
     "idProducto": 7,
     "nombre": "Limpiador De Pisos Plastificados Y Flotantes Cif 750 Ml",
     "categorias": [
@@ -75,5 +64,21 @@
     "EAN": "7791290793354",
     "stockminimo": 100,
     "puntoPedido": 120
+  },
+  {
+    "idProducto": "d18c2b2b-55de-4f8e-9bfc-58c2cc535d7a",
+    "EAN": "1111112223455",
+    "nombre": "asd",
+    "categorias": [
+      "Canara",
+      "Foto"
+    ],
+    "descripcion": "",
+    "unidadMedida": "gramos",
+    "envase": "tarro",
+    "stockMinimo": "21",
+    "puntoPedido": "50",
+    "fechaAlta": "2026-04-24T20:39:38.843Z",
+    "operador": "sistema"
   }
 ]
