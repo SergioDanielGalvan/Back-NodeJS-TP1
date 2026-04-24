@@ -4,29 +4,27 @@ import { Router } from "express";
 const router = Router();
 
 import {
+  createProducto,
+  deleteProducto,
   getAllProductos,
+  getAllProductosByCategoria,
+  getProductoByEAN,
   getProductoById,
   getProductoByNombre,
-  getAllProductosByCategoria,
-  getAllProductosWithStock,
-  createProducto,
-  deleteProductoById,
-  updateProductoWithStock,
-  updateProductoWithPrecio  
-} from "../controladores/MaestroproductosControlador.js";
-  
+  updateProducto,
+} from "../controladores/MaestroProductosControlador.js";
+
 // Rutas de productos Públicas
-router.get("/maestroproductos", getAllProductos);
-router.get("/maestroproductos/:id", getProductoById);
-router.get("/maestroproductos/nombre/:nombre", getProductoByNombre);
-router.get("/maestroproductos/categoria", getAllProductosByCategoria);
-router.get('/maestroproductos/:ean([0-9]{13})', getAllProductosByEAN );
+router.get("/", getAllProductos);
+router.get("/:id", getProductoById);
+router.get("/nombre/:nombre", getProductoByNombre);
+router.get("/categoria/:categoria", getAllProductosByCategoria);
+router.get("/ean/:ean", getProductoByEAN);
 
 // Rutas de productos Privadas
-router.post("/maestroproductos", createProducto);
+router.post("/", createProducto);
 // Privada y Admin
-router.delete("/maestroproductos/:id", deleteProductoById);
-router.put("/maestroproductos/stock/:id", updateProductoWithStock);
-router.put("/maestroproductos/precio/:id", updateProductoWithPrecio);
+router.put("/:id", updateProducto);
+router.delete("/:id", deleteProducto);
 
 export default router;

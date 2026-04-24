@@ -1,112 +1,72 @@
 import fs from "fs/promises";
 import path from "path";
 
-// let products = [];
-
 const __dirname = import.meta.dirname;
-// console.log(path.join(__dirname, "products.json"))
+const filePath = path.join(__dirname, "MaestroProductos.json");
 
-// fs.readFile(path.join(__dirname, "products.json"), "utf-8", (error, data) => {
-//   if (error) {
-//     return console.error(error);
-//   }
-
-//   products = JSON.parse(data);
-
-//   console.log(products);
-// });
-
-export const getAllProductos = async ( categoria ) => {
-  try {
-    const data = await fs.readFile(
-      path.join( __dirname, "Productos.json"), "utf-8"  );
-
-    var productos = JSON.parse(data);
-
-    if ( categoria ) {
-      return productos.filter( ( producto ) =>
-        producto.categorias.includes( categoria )
-      );
-    }  
-    return productos;
-
-  } catch (error) {
-    console.error(error);
-  }
-  finally {
-  }
-
+const obtenerTodos = async () => {
+  return await leerArchivo();
 };
 
-export const getProductoById = async (id) => {
-  try {
-    const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
-      "utf-8"
-    );
-
-    const productos = JSON.parse(data);
-
-    const producto = products.find((item) => item.id == id);
-
-    return producto;
-  } catch ( error ) {
-    console.error(error);
-  }
-    finally {
-  }
+const obtenerPorId = async (id) => {
+  const productos = await leerArchivo();
+  return productos.find((p) => String(p.idProducto) === String(id));
 };
 
+const guardar = async (producto) => {
+  const productos = await leerArchivo();
 
+  productos.push(producto);
 
-export const getProductoByNombre = async ( nombre ) => {
-  try {
-    const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
-      "utf-8"
-    );
+  await escribirArchivo(productos);
 
-    const productos = JSON.parse(data);
-
-    const producto = products.find((item) => item.nombre == nombre );
-
-    return producto;
-  } catch ( error ) {
-    console.error(error);
-  }
-    finally {
-  }
+  return producto;
 };
 
-export const createProducto = async ( nombre, precio, categorias, stock ) => {
-  const product = {
-    id: Date.now(),
-    nombre,
-    precio,
-    categorias,
-    stock,
+const actualizar = async (id, productoActualizado) => {
+  const productos = await leerArchivo();
+
+  const index = productos.findIndex((p) => String(p.idProducto) === String(id));
+
+  if (index === -1) return null;
+
+  productos[index] = {
+    ...productos[index],
+    ...productoActualizado,
   };
 
-  try {
-    const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
-      "utf-8"
-    );
+  await escribirArchivo(productos);
 
-    const productos = JSON.parse(data);
+  return productos[index];
+};
 
-    productos.push(producto);
+const eliminar = async (id) => {
+  const productos = await leerArchivo();
 
-    await fs.writeFile(
-      path.join(__dirname, "products.json"),
-      JSON.stringify(products)
-    );
+  const index = productos.findIndex((p) => String(p.idProducto) === String(id));
 
-    return product;
-  } catch (error) {
-    console.error(error);
-  }
-      finally {
-  }
+  if (index === -1) return null;
 
+  productos.splice(index, 1);
+
+  await escribirArchivo(productos);
+
+  return true;
+};
+
+const leerArchivo = async () => {
+  const data = await fs.readFile(filePath, "utf-8");
+  return JSON.parse(data);
+};
+
+const escribirArchivo = async (data) => {
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+};
+
+export default {
+  obtenerTodos,
+  obtenerPorId,
+  guardar,
+  actualizar,
+  eliminar,
 };
