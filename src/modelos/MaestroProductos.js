@@ -18,8 +18,7 @@ const __dirname = import.meta.dirname;
 
 export const getAllProductos = async ( categoria ) => {
   try {
-    const data = await fs.readFile(
-      path.join( __dirname, "Productos.json"), "utf-8"  );
+    const data = await fs.readFile( path.join( __dirname, "Productos.json"), "utf-8" );
 
     var productos = JSON.parse(data);
 
@@ -40,10 +39,7 @@ export const getAllProductos = async ( categoria ) => {
 
 export const getProductoById = async (id) => {
   try {
-    const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
-      "utf-8"
-    );
+    const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
 
     const productos = JSON.parse(data);
 
@@ -53,18 +49,13 @@ export const getProductoById = async (id) => {
   } catch ( error ) {
     console.error(error);
   }
-    finally {
+  finally {
   }
 };
 
-
-
 export const getProductoByNombre = async ( nombre ) => {
   try {
-    const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
-      "utf-8"
-    );
+    const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
 
     const productos = JSON.parse(data);
 
