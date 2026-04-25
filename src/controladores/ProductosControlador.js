@@ -80,3 +80,12 @@ export const getProductoById = async ( req, res ) => {
     }
 };
 
+export const createProducto = async ( req, res ) => {
+  try {
+    const { nombre, precio, categorias, stock } = req.body;
+    const producto = await modelProductos.createProducto( nombre, precio, categorias, stock );
+    res.status(201).json( producto );
+  } catch ( error ) {
+    res.status(400).json({ error: error.message });
+  }
+};

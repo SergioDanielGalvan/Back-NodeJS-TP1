@@ -1,26 +1,30 @@
 [
   {
     "idLote": 1,
+    "idProducto": 1,
     "precio": 5500,
     "stock": 300,
     "FechaVencimiento": "2026-12-31"
   },
   {
     "idLote": 2,
+    "idProducto": 2,
     "precio": 63500,
     "stock": 230,
     "FechaVencimiento": "2026-12-31"
   },
   {
     "idLote": 3,
+    "idProducto": 3,
     "precio": 2700,
-    "stock": 30,
+    "stock": 130,
     "FechaVencimiento": "2026-09-15"
   },
   {
     "idLote": 5,
+    "idProducto": 4,
     "precio": 3460,
-    "stock": 30,
-    "FechaVencimiento": "2026-09-15"
+    "stock": 220,
+    "FechaVencimiento": "2027-01-10"
   }
 ]

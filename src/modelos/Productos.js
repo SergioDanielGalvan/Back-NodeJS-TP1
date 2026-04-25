@@ -60,8 +60,6 @@ export const getProductoById = async (id) => {
   }
 };
 
-
-
 export const getProductoByNombre = async ( nombre ) => {
   try {
     const data = await fs.readFile(
@@ -82,12 +80,51 @@ export const getProductoByNombre = async ( nombre ) => {
 };
 
 export const createProducto = async ( nombre, precio, categorias, stock ) => {
+  // Primero busco un id único para el nuevo producto
+  try { const data = await fs.readFile(
+      path.join(__dirname, "Productos.json"),
+      "utf-8"
+    );
+    const productos = JSON.parse(data);
+    const ids = productos.map( ( producto ) => producto.id );
+    const maxId = Math.max( ...ids );
+    const newId = maxId + 1;
+  }
+  catch ( error ) {
+    console.error(error);
+  }
+  finally {
+    newId = newId ? newId : 1; // Si no hay productos, el primer ID será 1
+  }
+
+  // Checks para validar los datos de entrada
+  if ( !nombre || typeof nombre !== "string" ) {
+    throw new Error( "Nombre es requerido y debe ser una cadena de texto" );
+  }
+  if ( !precio || typeof precio !== "number" || precio < 0 ) {
+    throw new Error( "Precio es requerido y debe ser un número positivo" );
+  }
+  if ( !Array.isArray( categorias ) || categorias.some( cat => typeof cat !== "string" ) ) {
+    throw new Error( "Categorías debe ser un array de cadenas de texto" );
+  }
+  if ( stock === undefined || typeof stock !== "number" || stock < 0 ) {
+    throw new Error( "Stock es requerido y debe ser un número positivo" );
+  }
+
+  // Verifico contra el maestro que el producto exista ya por nombre
+  const data = await fs.readFile( path.join(__dirname, "MaestroProductos.json"), "utf-8" );
+  const MaestroProductos = JSON.parse(data);
+  const productoMaestro = MaestroProductos.find( item => item.nombre === nombre );
+  if ( !productoMaestro ) {
+    throw new Error( "El producto no existe en el maestro" );
+  }
+  const idProducto = productoMaestro.id;
+
   const product = {
-    id: Date.now(),
-    nombre,
-    precio,
-    categorias,
-    stock,
+    id: newId,
+    precio: precio,
+    stock: stock,
+    idProducto: idProducto
   };
 
   try {
@@ -98,7 +135,7 @@ export const createProducto = async ( nombre, precio, categorias, stock ) => {
 
     const productos = JSON.parse(data);
 
-    productos.push(producto);
+    productos.push( producto );
 
     await fs.writeFile(
       path.join(__dirname, "products.json"),
@@ -109,7 +146,7 @@ export const createProducto = async ( nombre, precio, categorias, stock ) => {
   } catch (error) {
     console.error(error);
   }
-      finally {
+  finally {
   }
 
 };
