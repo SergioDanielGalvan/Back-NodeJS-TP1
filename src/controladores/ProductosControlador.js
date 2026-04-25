@@ -89,3 +89,20 @@ export const createProducto = async ( req, res ) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const deleteProducto = async ( req, res ) => {
+    try {
+        const { id } = req.params;
+        const productoEliminado = await modelProductos.deleteProducto( id );
+        if ( !productoEliminado ) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+        res.status(200).json({ message: "Producto eliminado correctamente" });
+    }
+    catch ( error ) {
+        res.status(500).json({ error: "Error del servidor" });
+    }
+    finally {
+    }
+};
+

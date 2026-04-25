@@ -128,25 +128,44 @@ export const createProducto = async ( nombre, precio, categorias, stock ) => {
   };
 
   try {
-    const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+    const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+    const productos = JSON.parse(data);
+
+    productos.push( producto ); // Agrego el nuevo producto al array
+
+    await fs.writeFile( path.join(__dirname, "Productos.json"),
+      JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
       "utf-8"
     );
 
-    const productos = JSON.parse(data);
-
-    productos.push( producto );
-
-    await fs.writeFile(
-      path.join(__dirname, "products.json"),
-      JSON.stringify(products)
-    );
-
     return product;
+
   } catch (error) {
     console.error(error);
   }
   finally {
   }
 
+};
+
+export const deleteProductoById = async ( id ) => {
+  try {
+    const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+    const productos = JSON.parse(data);
+    const index = productos.findIndex( ( producto ) => producto.id === id );
+    if ( index === -1 ) {
+      throw new Error( "Producto no encontrado" );
+    }
+    productos.splice( index, 1 ); // Elimino el producto del array
+    await fs.writeFile( path.join(__dirname, "Productos.json"),
+      JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
+      "utf-8"
+    );
+    return true;
+  } catch ( error ) {
+    console.error('Error al eliminar producto', error);
+    throw error;
+  }
+  finally {
+  }
 };
