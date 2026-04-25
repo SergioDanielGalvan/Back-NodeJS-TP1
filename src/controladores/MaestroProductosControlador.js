@@ -1,12 +1,26 @@
-import * as model from "../modelos/MaestroProductos.js";
+import * as modelMaestro from "../modelos/MaestroProductos.js";
+import * as modelProductos from "../modelos/Productos.js";
 
 export const getAllProductos = async ( req, res ) => {
   try {
-    const productos = await model.getAllProductos( '', false );
-    if ( !productos ) {
+    const productosMaestro = await modelMaestro.getAllProductos( '', false );
+    if ( !productosMaestro ) {
       return res.status(404).json({ error: "Productos no encontrados" });
     }
-    res.status(200).json( productos );
+    // Datos de stock para cada producto
+    const productosConStock = await model.getAllProductos( '', false );
+    /*
+    const productosConStock = await Promise.all(
+      productosMaestro.map( async ( producto ) => {
+        const productoConStock = await modelProductos.getProductoById( producto.id ); 
+        return {
+          ...producto,
+          stock: productoConStock ? productoConStock.stock : 0
+        };
+      } )
+    );
+    */
+    res.status(200).json( productosConStock );
   } catch ( error ) {
     res.status(500).json({ error: "Error del servidor" });
   }
