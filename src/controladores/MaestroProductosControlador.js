@@ -8,7 +8,7 @@ export const getAllProductos = async ( req, res ) => {
       return res.status(404).json({ error: "Productos no encontrados" });
     }
     // Datos de stock para cada producto
-    const productosConStock = await model.getAllProductos( '', false );
+    const productosConStock = await modelProductos.getAllProductos( '', false );
     /*
     const productosConStock = await Promise.all(
       productosMaestro.map( async ( producto ) => {
@@ -30,7 +30,7 @@ export const getAllProductos = async ( req, res ) => {
 export const getAllProductosByCategoria = async ( req, res ) => {
   try {
     const { categoria } = req.params;
-    const productos = await model.getAllProducts( categoria, false );
+    const productos = await modelMaestro.getAllProducts( categoria, false );
     if ( !productos ) {
       return res.status(404).json({ error: "Productos no encontrados" });
     }
