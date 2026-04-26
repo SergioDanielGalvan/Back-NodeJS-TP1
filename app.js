@@ -30,9 +30,8 @@ app.get('/', (req, res) => {
 });
 
 app.use("/productos", productosRouter);
-app.use("/maestroproductos", maestroProductosRouter);
 app.use("/api/maestroproductos", maestroProductosRouter);
-app.use("/maestroproductos", maestroProductosRouterViews);
+app.use("/maestroProductosRouterViews", maestroProductosRouterViews);
 
 // Manejo de errores 404
 app.use((req, res) => {
