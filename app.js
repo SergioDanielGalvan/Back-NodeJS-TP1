@@ -4,6 +4,7 @@ import cors from 'cors';
 import methodOverride from "method-override";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import productosRouter from "./src/rutas/ProductosRouter.js";
 import maestroProductosRouter from "./src/rutas/MaestroProductosRouter.js";
 import maestroProductosRouterViews from "./src/rutas/MaestroProductosRouterViews.js";
 
@@ -29,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 app.use("/productos", productosRouter);
-app.use("/maestroproductos", productosRouter);
+app.use("/maestroproductos", maestroProductosRouter);
 app.use("/api/maestroproductos", maestroProductosRouter);
 app.use("/maestroproductos", maestroProductosRouterViews);
 
