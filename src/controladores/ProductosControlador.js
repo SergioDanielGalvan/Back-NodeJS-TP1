@@ -80,6 +80,29 @@ export const getProductoById = async ( req, res ) => {
     }
 };
 
+export const getProductoByNombre = async ( req, res ) => {
+  try {
+    const { nombre } = req.params;
+    const productoEnMaestro = await modelMaestro.getProductoByNombre( nombre );
+    if ( !productoEnMaestro ) {
+        return res.status(404).json({ error: "Producto en Maestro no encontrado" });
+    }
+    const productoenStock = await modelProductos.getProductoById( productoEnMaestro.id );
+    if ( !productoenStock ) {
+        return res.status(404).json({ error: "Producto en stock no encontrado" });
+    }
+    productoenStock.nombre = productoEnMaestro.nombre;
+    productoenStock.categorias = productoEnMaestro.categorias;
+    productoenStock.EAN = productoEnMaestro.EAN;
+    res.status(200).json( productoenStock );
+  }
+    catch ( error ) {
+        res.status(500).json({ error: "Error del servidor" });
+    }
+    finally {
+    }   
+};
+
 export const createProducto = async ( req, res ) => {
   try {
     const { nombre, precio, categorias, stock } = req.body;
@@ -166,4 +189,4 @@ export const crearRegistroCompra = async (req, res) => {
     }
 };
 
-
+export const getAllProductosWithStock = getAllProductos;
