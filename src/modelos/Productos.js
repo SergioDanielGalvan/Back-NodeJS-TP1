@@ -169,3 +169,119 @@ export const deleteProductoById = async ( id ) => {
   finally {
   }
 };
+
+export const getAllProductosWithStock = async ( req, res ) => {
+    try {
+        const dataStock = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+        const productosStock = JSON.parse(dataStock);
+        const productosConStock = productosStock.filter( producto => producto.stock > 0 );
+        const dataMaestro = await fs.readFile( path.join(__dirname, "MaestroProductos.json"), "utf-8" );
+        const productosMaestro = JSON.parse(dataMaestro);
+        productosConStock.forEach( producto => {
+            const productoMaestro = productosMaestro.find( item => item.id === producto.idProducto );
+            if ( productoMaestro ) {
+                producto.nombre = productoMaestro.nombre;
+                producto.categorias = productoMaestro.categorias;
+                producto.EAN = productoMaestro.EAN;
+            }
+        } );
+        return productosConStock;
+    } catch ( error ) {
+        console.error('Error al obtener productos con stock', error);
+        throw error;
+    }
+    finally {
+    }
+};
+
+export const getAllProductos = async ( req, res ) => {
+    try {
+        const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+        const productos = JSON.parse(data);
+        const dataMaestro = await fs.readFile( path.join(__dirname, "MaestroProductos.json"), "utf-8" );
+        const productosMaestro = JSON.parse(dataMaestro);
+        productos.forEach( producto => {
+            const productoMaestro = productosMaestro.find( item => item.id === producto.idProducto );
+            if ( productoMaestro ) {
+                producto.nombre = productoMaestro.nombre;
+                producto.categorias = productoMaestro.categorias;
+                producto.EAN = productoMaestro.EAN;
+            }
+        } );
+        return productos;
+    } catch ( error ) {
+        console.error('Error al obtener todos los productos', error);
+        throw error;
+    }
+    finally {
+    }
+};
+
+export const updateProductoWithStock = async ( id, nuevoStock ) => {
+  try {
+    const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+    const productos = JSON.parse(data);
+    const index = productos.findIndex( ( producto ) => producto.id === id );
+    if ( index === -1 ) {
+      throw new Error( "Producto no encontrado" );
+    }
+    productos[index].stock = nuevoStock; // Actualizo el stock del producto
+    await fs.writeFile( path.join(__dirname, "Productos.json"),
+      JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
+      "utf-8"
+    );
+    return productos[index];
+  } catch ( error ) {
+    console.error('Error al actualizar stock del producto', error);
+    throw error;
+  }
+  finally {
+  }
+};
+
+export const updateProductoWithPrecio = async ( id, nuevoPrecio ) => {
+  try {
+    const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+    const productos = JSON.parse(data);
+    const index = productos.findIndex( ( producto ) => producto.id === id );
+    if ( index === -1 ) {
+      throw new Error( "Producto no encontrado" );
+    }
+    productos[index].precio = nuevoPrecio; // Actualizo el precio del producto
+    await fs.writeFile( path.join(__dirname, "Productos.json"),
+      JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
+      "utf-8"
+    );
+    return productos[index];
+  } catch ( error ) {
+    console.error('Error al actualizar precio del producto', error);
+    throw error;
+  }
+  finally {
+  } 
+};
+
+export const getAllProductosByCategoria = async ( req, res ) => {
+    try {
+        const { categoria } = req.query;
+        const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+        const productos = JSON.parse(data);
+        const productosFiltrados = productos.filter( producto => producto.categorias.includes( categoria ) );
+        const dataMaestro = await fs.readFile( path.join(__dirname, "MaestroProductos.json"), "utf-8" );
+        const productosMaestro = JSON.parse(dataMaestro);
+        productosFiltrados.forEach( producto => {
+            const productoMaestro = productosMaestro.find( item => item.id === producto.idProducto );
+            if ( productoMaestro ) {
+                producto.nombre = productoMaestro.nombre;
+                producto.categorias = productoMaestro.categorias;
+                producto.EAN = productoMaestro.EAN;
+            }
+        } );
+        return productosFiltrados;
+    } catch ( error ) {
+        console.error('Error al obtener productos por categoría', error);
+        throw error;
+    }
+    finally {
+    }
+};

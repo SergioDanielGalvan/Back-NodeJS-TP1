@@ -106,3 +106,40 @@ export const deleteProducto = async ( req, res ) => {
     }
 };
 
+export const updateProductoWithStock = async ( req, res ) => {
+    try {
+        const { id } = req.params;
+        const { stock } = req.body;
+        const productoActualizado = await modelProductos.updateProductoWithStock( id, stock );
+        if ( !productoActualizado ) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+        res.status(200).json( productoActualizado );
+    }
+    catch ( error ) {
+        res.status(500).json({ error: "Error del servidor" });
+    }
+    finally {
+    }
+};
+
+export const updateProductoWithPrecio = async ( req, res ) => {
+    try {
+        const { id } = req.params;
+        const { precio } = req.body;
+        const productoActualizado = await modelProductos.updateProductoWithPrecio( id, precio );
+        if ( !productoActualizado ) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+        res.status(200).json( productoActualizado );
+    }
+    catch ( error ) {
+        res.status(500).json({ error: "Error del servidor" });
+    }
+    finally {
+    }
+};
+
+
+
+
