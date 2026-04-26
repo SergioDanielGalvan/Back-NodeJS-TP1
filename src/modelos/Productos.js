@@ -16,29 +16,27 @@ const __dirname = import.meta.dirname;
 //   console.log(products);
 // });
 
-export const getAllProductos = async ( categoria, stock ) => {
-  try {
-    const data = await fs.readFile(
-      path.join( __dirname, "Productos.json"), "utf-8"  );
-
-    var productos = JSON.parse(data);
-    if ( stock ) {
-      productos = productos.filter( ( producto ) => producto.stock > 0 );
-    }  
-
-    if ( categoria ) {
-      return productos.filter( ( producto ) =>
-        producto.categorias.includes( categoria )
-      );
-    }  
-    return productos;
-
-  } catch (error) {
-    console.error(error);
-  }
-  finally {
-  }
-
+export const getAllProductos = async ( req, res ) => {
+    try {
+        const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
+        const productos = JSON.parse(data);
+        const dataMaestro = await fs.readFile( path.join(__dirname, "MaestroProductos.json"), "utf-8" );
+        const productosMaestro = JSON.parse(dataMaestro);
+        productos.forEach( producto => {
+            const productoMaestro = productosMaestro.find( item => item.id === producto.idProducto );
+            if ( productoMaestro ) {
+                producto.nombre = productoMaestro.nombre;
+                producto.categorias = productoMaestro.categorias;
+                producto.EAN = productoMaestro.EAN;
+            }
+        } );
+        return productos;
+    } catch ( error ) {
+        console.error('Error al obtener todos los productos', error);
+        throw error;
+    }
+    finally {
+    }
 };
 
 export const getProductoById = async (id) => {
@@ -188,29 +186,6 @@ export const getAllProductosWithStock = async ( req, res ) => {
         return productosConStock;
     } catch ( error ) {
         console.error('Error al obtener productos con stock', error);
-        throw error;
-    }
-    finally {
-    }
-};
-
-export const getAllProductos = async ( req, res ) => {
-    try {
-        const data = await fs.readFile( path.join(__dirname, "Productos.json"), "utf-8" );
-        const productos = JSON.parse(data);
-        const dataMaestro = await fs.readFile( path.join(__dirname, "MaestroProductos.json"), "utf-8" );
-        const productosMaestro = JSON.parse(dataMaestro);
-        productos.forEach( producto => {
-            const productoMaestro = productosMaestro.find( item => item.id === producto.idProducto );
-            if ( productoMaestro ) {
-                producto.nombre = productoMaestro.nombre;
-                producto.categorias = productoMaestro.categorias;
-                producto.EAN = productoMaestro.EAN;
-            }
-        } );
-        return productos;
-    } catch ( error ) {
-        console.error('Error al obtener todos los productos', error);
         throw error;
     }
     finally {
