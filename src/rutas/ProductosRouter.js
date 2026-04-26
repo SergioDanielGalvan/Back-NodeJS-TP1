@@ -12,7 +12,8 @@ import {
   createProducto,
   deleteProductoById,
   updateProductoWithStock,
-  updateProductoWithPrecio  
+  updateProductoWithPrecio,
+  crearRegistroCompra
 } from "../controladores/ProductosControlador.js";
 
 // Rutas de productos Públicas
@@ -28,5 +29,6 @@ router.post("/productos", createProducto);
 router.delete("/productos/:id", deleteProductoById);
 router.put("/productos/stock/:id", updateProductoWithStock);
 router.put("/productos/precio/:id", updateProductoWithPrecio);
+router.post("/productos/compra", crearRegistroCompra);
 
 export default router;

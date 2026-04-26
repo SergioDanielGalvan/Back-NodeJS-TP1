@@ -90,7 +90,8 @@ export const createProducto = async ( req, res ) => {
   }
 };
 
-export const deleteProducto = async ( req, res ) => {
+// RENOMBRADO: De deleteProducto a deleteProductoById para que coincida con el Router
+export const deleteProductoById = async ( req, res ) => {
     try {
         const { id } = req.params;
         const productoEliminado = await modelProductos.deleteProducto( id );
@@ -140,6 +141,29 @@ export const updateProductoWithPrecio = async ( req, res ) => {
     }
 };
 
+export const crearRegistroCompra = async (req, res) => {
+    try {
+        const { idProducto, precioCompra, cantidad, fechaVencimiento } = req.body;
 
+        // Validaciones mínimas
+        if (!idProducto || !precioCompra || !cantidad) {
+            return res.status(400).json({ error: "Faltan datos obligatorios para la compra" });
+        }
+
+        const nuevoLote = await modelProductos.registrarCompraLote({
+            idProducto,
+            precioCompra,
+            cantidad,
+            fechaVencimiento
+        });
+
+        res.status(201).json({
+            message: "Compra registrada y lote creado con éxito",
+            lote: nuevoLote
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al procesar la compra" });
+    }
+};
 
 

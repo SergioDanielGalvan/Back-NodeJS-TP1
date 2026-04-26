@@ -19,6 +19,7 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(methodOverride("_method"));
 
 // Rutas (se irán agregando)
 app.get('/', (req, res) => {
@@ -27,7 +28,8 @@ app.get('/', (req, res) => {
 
 app.use("/productos", productosRouter);
 app.use("/maestroproductos", productosRouter);
-
+app.use("/api/maestroproductos", maestroProductosRouter);
+app.use("/maestroproductos", maestroProductosRouterViews);
 
 // Manejo de errores 404
 app.use((req, res) => {

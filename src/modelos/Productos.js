@@ -285,3 +285,36 @@ export const getAllProductosByCategoria = async ( req, res ) => {
     finally {
     }
 };
+
+export const registrarCompraLote = async (dataCompra) => {
+    try {
+        const productos = await leerArchivo(); // Usamos la función de lectura que ya tenemos
+        
+        // 1. Generar nuevo idLote
+        const ids = productos.map((p) => p.idLote || 0);
+        const maxId = ids.length > 0 ? Math.max(...ids) : 0;
+        const nuevoIdLote = maxId + 1;
+
+        // 2. Armar el nuevo objeto Lote
+        const nuevoLote = {
+            idLote: nuevoIdLote,
+            idProducto: dataCompra.idProducto,
+            precio: dataCompra.precioCompra, // El precio al que compramos
+            stock: dataCompra.cantidad,
+            FechaVencimiento: dataCompra.fechaVencimiento || "2027-01-01"
+        };
+
+        // 3. Guardar en el JSON
+        productos.push(nuevoLote);
+        await fs.writeFile(
+            path.join(__dirname, "Productos.json"),
+            JSON.stringify(productos, null, 2),
+            "utf-8"
+        );
+
+        return nuevoLote;
+    } catch (error) {
+        console.error("Error al registrar compra:", error);
+        throw error;
+    }
+};
