@@ -1,15 +1,17 @@
 // app.js
 import express from 'express';
 import cors from 'cors';
+import methodOverride from "method-override";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import maestroProductosRouter from "./src/rutas/MaestroProductosRouter.js";
+import maestroProductosRouterViews from "./src/rutas/MaestroProductosRouterViews.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors());
-
 const app = express();
+app.use(cors());
 
 // Configuración de Pug
 app.set('view engine', 'pug');
