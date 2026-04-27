@@ -15,7 +15,7 @@ import {
   getProductoByEAN,
   createProducto,
   deleteProductoById,
-} from "../controladores/MaestroProductosControlador2.js";
+} from "../controladores/MaestroProductosControlador.js";
 
 const router = Router();
 

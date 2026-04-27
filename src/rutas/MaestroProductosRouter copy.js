@@ -12,7 +12,7 @@ import {
   getProductoById,
   getProductoByNombre,
   updateProducto,
-} from "../controladores/MaestroProductosControlador2.js";
+} from "../controladores/MaestroProductosControlador.js";
 
 // Rutas de productos Públicas
 router.get("/", getAllProductos);

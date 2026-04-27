@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
   res.render('index', { titulo: 'TodoStock S.A.' });
 });
 
-app.use("/productos", productosRouter);
+app.use("/api/productos", productosRouter);
 app.use("/api/maestroproductos", maestroProductosRouter);
 app.use("/maestroProductosRouterViews", maestroProductosRouterViews);
 
