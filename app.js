@@ -16,7 +16,7 @@ app.use(cors());
 
 // Configuración de Pug
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'src/views'));
+app.set('views', path.join(__dirname, 'src/vistas'));
 
 // Middlewares
 app.use(express.json());

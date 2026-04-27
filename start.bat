@@ -1,1 +1,1 @@
-nmp run start
+npm run dev
