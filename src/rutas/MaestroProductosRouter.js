@@ -1,7 +1,11 @@
-// src/rutas/ProductosRouter.js
+// src/rutas/MaestroProductosRouter.js
 import { Router } from "express";
 
-const router = Router();
+/*
+router.get('/', (req, res) => {
+  res.json({ mensaje: 'API de productos funcionando' });
+});
+*/
 
 import {
   getAllProductos,
@@ -11,11 +15,14 @@ import {
   getProductoByEAN,
   createProducto,
   deleteProductoById,
-} from "../controladores/MaestroproductosControlador.js";
-  
+} from "../controladores/MaestroProductosControlador2.js";
+
+const router = Router();
+
+
 // Rutas de productos Públicas
-router.get("/maestroproductos", getAllProductos);
-router.get("/maestroproductos/:id", getProductoById);
+router.get('/', getAllProductos);   // Esto hará que la raíz devuelva todos los productos
+router.get("/:id", getProductoById);
 router.get("/maestroproductos/nombre/:nombre", getProductoByNombre);
 router.get("/maestroproductos/categoria", getAllProductosByCategoria);
 //router.get('/maestroproductos/:ean([0-9]{13})', getProductoByEAN );

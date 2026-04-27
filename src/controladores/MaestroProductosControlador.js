@@ -1,126 +1,49 @@
-import maestroService from "../servicios/MaestroProductosService.js";
+// src/controladores/MaestroproductosControlador.js
 
-// GET /maestroproductos
-export const getAllProductos = async (req, res) => {
-  try {
-    const productos = await maestroService.obtenerCatalogo();
-    res.json(productos);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// Simulamos una base de datos en memoria mientras no tengas el repositorio JSON
+let productos = [
+  { id: 1, nombre: 'Lavandina 1L', categoria: 'Limpieza', stockMinimo: 10 },
+  { id: 2, nombre: 'Detergente 500ml', categoria: 'Limpieza', stockMinimo: 5 },
+];
+
+export const getAllProductos = (req, res) => {
+  res.json(productos);
 };
 
-// GET /maestroproductos/:id
-export const getProductoById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const producto = await maestroService.obtenerProductoCatalogo(id);
-
-    if (!producto) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-
-    res.json(producto);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+export const getProductoById = (req, res) => {
+  const producto = productos.find(p => p.id == req.params.id);
+  if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+  res.json(producto);
 };
 
-// GET /maestroproductos/nombre/:nombre
-export const getProductoByNombre = async (req, res) => {
-  try {
-    const { nombre } = req.params;
-
-    const producto = await maestroService.buscarPorNombre(nombre);
-
-    if (!producto) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-
-    res.json(producto);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+export const getProductoByNombre = (req, res) => {
+  const filtrados = productos.filter(p =>
+    p.nombre.toLowerCase().includes(req.params.nombre.toLowerCase())
+  );
+  res.json(filtrados);
 };
 
-// GET /maestroproductos/categoria/:categoria
-export const getAllProductosByCategoria = async (req, res) => {
-  try {
-    const { categoria } = req.params;
-
-    const productos = await maestroService.buscarPorCategoria(categoria);
-
-    if (!productos) {
-      return res.status(404).json({ error: "Productos no encontrados" });
-    }
-
-    res.json(productos);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+export const getAllProductosByCategoria = (req, res) => {
+  const { categoria } = req.query;
+  if (!categoria) return res.status(400).json({ error: 'Falta parámetro categoria' });
+  const filtrados = productos.filter(p => p.categoria === categoria);
+  res.json(filtrados);
 };
 
-// GET /maestroproductos/ean/:ean
-export const getProductoByEAN = async (req, res) => {
-  try {
-    const { ean } = req.params;
-
-    const producto = await maestroService.buscarPorEAN(ean);
-
-    if (!producto) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-
-    res.json(producto);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+export const getProductoByEAN = (req, res) => {
+  // Simulación: como no tenemos EAN, devolvemos 404 o un mensaje
+  res.status(404).json({ error: 'Búsqueda por EAN no implementada aún' });
 };
 
-// POST /maestroproductos
-export const createProducto = async (req, res) => {
-  try {
-    const nuevoProducto = await maestroService.crearProductoCatalogo(req.body);
-    res.status(201).json(nuevoProducto);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+export const createProducto = (req, res) => {
+  const nuevo = { id: Date.now(), ...req.body };
+  productos.push(nuevo);
+  res.status(201).json(nuevo);
 };
 
-// PUT /maestroproductos/:id
-export const updateProducto = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const productoActualizado = await maestroService.editarProductoCatalogo(
-      id,
-      req.body,
-    );
-
-    if (!productoActualizado) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-
-    res.json(productoActualizado);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// DELETE /maestroproductos/:id
-export const deleteProductoById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const eliminado = await maestroService.eliminarProductoCatalogo(id);
-
-    if (!eliminado) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-
-    res.json({ message: "Producto eliminado correctamente" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+export const deleteProductoById = (req, res) => {
+  const index = productos.findIndex(p => p.id == req.params.id);
+  if (index === -1) return res.status(404).json({ error: 'Producto no encontrado' });
+  productos.splice(index, 1);
+  res.json({ mensaje: 'Producto eliminado' });
 };

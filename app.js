@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(cors());
+//app.use(cors());
 
 // Configuración de Pug
 app.set('view engine', 'pug');
@@ -21,20 +21,15 @@ app.set('views', path.join(__dirname, 'src/vistas'));
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.use(methodOverride("_method"));
+//app.use(express.static('public'));
+//app.use(methodOverride("_method"));
 
 // Rutas (se irán agregando)
-/*
 app.get('/', (req, res) => {
   res.render('index', { titulo: 'TodoStock S.A.' });
 });
-app.get('/productos', (req, res) => { 
-  res.send('Bienvenido a la página de productos'); 
-}); 
-*/
-app.use("/productos", productosRouter);
 
+app.use("/productos", productosRouter);
 app.use("/api/maestroproductos", maestroProductosRouter);
 app.use("/maestroProductosRouterViews", maestroProductosRouterViews);
 
