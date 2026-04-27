@@ -4,6 +4,7 @@ import * as modelMaestro from "../modelos/MaestroProductos.js";
 export const getAllProductos = async ( req, res ) => {
     try {
         const productosMaestro = await modelMaestro.getAllProductos( '', false );
+        return res.status(404).json({ error: "Productos en Maestro no encontrados" });
         if ( !productosMaestro ) {
             return res.status(404).json({ error: "Productos en Maestro no encontrados" });
         }

@@ -25,11 +25,16 @@ app.use(express.static('public'));
 app.use(methodOverride("_method"));
 
 // Rutas (se irán agregando)
+/*
 app.get('/', (req, res) => {
   res.render('index', { titulo: 'TodoStock S.A.' });
 });
-
+app.get('/productos', (req, res) => { 
+  res.send('Bienvenido a la página de productos'); 
+}); 
+*/
 app.use("/productos", productosRouter);
+
 app.use("/api/maestroproductos", maestroProductosRouter);
 app.use("/maestroProductosRouterViews", maestroProductosRouterViews);
 
