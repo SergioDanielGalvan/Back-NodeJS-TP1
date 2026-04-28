@@ -61,13 +61,10 @@ const leerArchivo = async () => {
 
 const getAllProductos = async ( categoria ) => {
   try {
-    const data = await fs.readFile( path.join( __dirname, "Productos.json"), "utf-8" );
-
-    var productos = JSON.parse(data);
-
+    const productos = await leerArchivo(); // ya lee MaestroProductos.json
     if ( categoria ) {
-      return productos.filter( ( producto ) =>
-        producto.categorias.includes( categoria )
+      return productos.filter( ( p ) =>
+        p.categorias && p.categorias.some(cat => cat.toLowerCase().includes(categoria.toLowerCase()))
       );
     }  
     return productos;

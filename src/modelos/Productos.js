@@ -12,7 +12,7 @@ export const getAllProductos = async ( req, res ) => {
         const dataMaestro = await fs.readFile( path.join(__dirname, "MaestroProductos.json"), "utf-8" );
         const productosMaestro = JSON.parse(dataMaestro);
         productos.forEach( producto => {
-            const productoMaestro = productosMaestro.find( item => item.id === producto.idProducto );
+            const productoMaestro = productosMaestro.find( item => item.idProducto === producto.idProducto );
             if ( productoMaestro ) {
                 producto.nombre = productoMaestro.nombre;
                 producto.categorias = productoMaestro.categorias;

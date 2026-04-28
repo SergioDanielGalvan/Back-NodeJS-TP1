@@ -2,7 +2,7 @@ import * as modelProductos from "../modelos/Productos.js";
 //import * as modelMaestro from "../modelos/MaestroProductos.js";
 import modelMaestro from "../modelos/MaestroProductos.js";
 
-export const getAllProductos = async ( req, res ) => {
+export const getAllProductos1 = async ( req, res ) => {
     try {
         const productosMaestro = await modelMaestro.getAllProductos( '' );
         //const productosMaestro = await modelMaestro.obtenerTodos();
@@ -15,7 +15,7 @@ export const getAllProductos = async ( req, res ) => {
             return res.status(404).json({ error: "Productos en stock no encontrados" });
         }
         productosConStock.forEach( producto => {
-            const productoMaestro = productosMaestro.find(item => item.idProducto === producto.idProducto);
+            const productoMaestro = productosMaestro.find( item => item.id === producto.id );
             if ( productoMaestro ) {
                 producto.nombre = productoMaestro.nombre;
                 producto.categorias = productoMaestro.categorias;
@@ -28,6 +28,33 @@ export const getAllProductos = async ( req, res ) => {
         res.status(500).json({ error: "Error del servidor", details: error.message });
     }
     finally {
+    }
+};
+
+export const getAllProductos = async (req, res) => {
+    try {
+        // Obtener catálogo maestro
+        const productosMaestro = await modelMaestro.getAllProductos('');
+        if (!productosMaestro) {
+            return res.status(404).json({ error: "Productos en Maestro no encontrados" });
+        }
+        // Obtener lotes con stock (o todos los lotes)
+        const productosConStock = await modelProductos.getAllProductosWithStock(); // asumiendo que devuelve array
+        if (!productosConStock) {
+            return res.status(404).json({ error: "Productos en stock no encontrados" });
+        }
+        // Enriquecer cada lote con datos del maestro
+        productosConStock.forEach(lote => {
+            const productoMaestro = productosMaestro.find(item => String(item.idProducto) === String(lote.idProducto));
+            if (productoMaestro) {
+                lote.nombre = productoMaestro.nombre;
+                lote.categorias = productoMaestro.categorias;
+                lote.EAN = productoMaestro.EAN;
+            }
+        });
+        res.status(200).json(productosConStock);
+    } catch (error) {
+        res.status(500).json({ error: "Error del servidor", details: error.message });
     }
 };
 
