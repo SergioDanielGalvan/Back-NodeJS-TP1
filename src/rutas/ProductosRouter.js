@@ -17,18 +17,18 @@ import {
 } from "../controladores/ProductosControlador.js";
 
 // Rutas de productos Públicas
-router.get("/productos", getAllProductos);
-router.get("/api/productos/:id", getProductoById);
-router.get("/api/productos/nombre/:nombre", getProductoByNombre);
-router.get("/api/productos/categoria", getAllProductosByCategoria);
+router.get("/", getAllProductos);
+router.get("/productos/:id", getProductoById);
+router.get("/productos/nombre/:nombre", getProductoByNombre);
+router.get("/productos/categoria", getAllProductosByCategoria);
 
 // Rutas de productos Privadas
-router.get("/api/productos/stock", getAllProductosWithStock);
-router.post("/api/productos", createProducto);
+router.get("/productos/stock", getAllProductosWithStock);
+router.post("/productos", createProducto);
 // Privada y Admin
-router.delete("/api/productos/:id", deleteProductoById);
-router.put("/api/productos/stock/:id", updateProductoWithStock);
-router.put("/api/productos/precio/:id", updateProductoWithPrecio);
-router.post("/api/productos/compra", crearRegistroCompra);
+router.delete("/productos/:id", deleteProductoById);
+router.put("/productos/stock/:id", updateProductoWithStock);
+router.put("/productos/precio/:id", updateProductoWithPrecio);
+router.post("/productos/compra", crearRegistroCompra);
 
 export default router;

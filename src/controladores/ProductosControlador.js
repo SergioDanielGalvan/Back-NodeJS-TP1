@@ -1,10 +1,11 @@
 import * as modelProductos from "../modelos/Productos.js";
-import * as modelMaestro from "../modelos/MaestroProductos.js";
+//import * as modelMaestro from "../modelos/MaestroProductos.js";
+import modelMaestro from "../modelos/MaestroProductos.js";
 
 export const getAllProductos = async ( req, res ) => {
     try {
-        const productosMaestro = await modelMaestro.getAllProductos( '', false );
-        return res.status(404).json({ error: "Productos en Maestro no encontrados" });
+        const productosMaestro = await modelMaestro.getAllProductos( '' );
+        //const productosMaestro = await modelMaestro.obtenerTodos();
         if ( !productosMaestro ) {
             return res.status(404).json({ error: "Productos en Maestro no encontrados" });
         }
@@ -22,8 +23,9 @@ export const getAllProductos = async ( req, res ) => {
             }
         } );
         res.status(200).json( productosConStock );
-    } catch ( error ) {
-        res.status(500).json({ error: "Error del servidor" });
+    }    
+    catch ( error ) {
+        res.status(500).json({ error: "Error del servidor", details: error.message });
     }
     finally {
     }

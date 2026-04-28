@@ -59,6 +59,27 @@ const leerArchivo = async () => {
   return JSON.parse(data);
 };
 
+const getAllProductos = async ( categoria ) => {
+  try {
+    const data = await fs.readFile( path.join( __dirname, "Productos.json"), "utf-8" );
+
+    var productos = JSON.parse(data);
+
+    if ( categoria ) {
+      return productos.filter( ( producto ) =>
+        producto.categorias.includes( categoria )
+      );
+    }  
+    return productos;
+
+  } catch (error) {
+    console.error(error);
+  }
+  finally {
+  }
+
+};
+
 const escribirArchivo = async (data) => {
   await fs.writeFile(filePath, JSON.stringify(data, null, 2));
 };
@@ -69,4 +90,5 @@ export default {
   guardar,
   actualizar,
   eliminar,
+  getAllProductos
 };
