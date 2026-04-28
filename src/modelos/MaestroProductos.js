@@ -77,6 +77,20 @@ const getAllProductos = async ( categoria ) => {
 
 };
 
+const createProducto = async ( producto ) => {
+  const productos = await leerArchivo();
+  const newId = productos.length > 0 ? Math.max(...productos.map(p => p.idProducto)) + 1 : 1;
+  const nuevoProducto = {
+    ...producto,  // Copia las propiedades del producto recibido, deconstruyo
+    idProducto: newId,
+    fechaAlta: new Date().toISOString(),
+    operador: datos.operador || "sistema",
+  };
+  productos.push(nuevoProducto);
+  await escribirArchivo( productos );
+  return nuevoProducto;
+};
+
 const escribirArchivo = async (data) => {
   await fs.writeFile(filePath, JSON.stringify(data, null, 2));
 };
@@ -87,5 +101,9 @@ export default {
   guardar,
   actualizar,
   eliminar,
-  getAllProductos
+  getAllProductos,
+  createProducto
+};
+
+  createProducto
 };

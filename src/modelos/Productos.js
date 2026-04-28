@@ -67,23 +67,6 @@ export const getProductoByNombre = async ( nombre ) => {
 };
 
 export const createProducto = async ( nombre, precio, categorias, stock ) => {
-  // Primero busco un id único para el nuevo producto
-  try { const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
-      "utf-8"
-    );
-    const productos = JSON.parse(data);
-    const ids = productos.map( ( producto ) => producto.id );
-    const maxId = Math.max( ...ids );
-    const newId = maxId + 1;
-  }
-  catch ( error ) {
-    console.error(error);
-  }
-  finally {
-    newId = newId ? newId : 1; // Si no hay productos, el primer ID será 1
-  }
-
   // Checks para validar los datos de entrada
   if ( !nombre || typeof nombre !== "string" ) {
     throw new Error( "Nombre es requerido y debe ser una cadena de texto" );
@@ -107,11 +90,29 @@ export const createProducto = async ( nombre, precio, categorias, stock ) => {
   }
   const idProducto = productoMaestro.id;
 
+    // Busco un id único para el nuevo producto
+  try { const data = await fs.readFile(
+      path.join(__dirname, "Productos.json"),
+      "utf-8"
+    );
+    const productos = JSON.parse(data);
+    const ids = productos.map( ( producto ) => producto.id );
+    const maxId = Math.max( ...ids );
+    const newId = maxId + 1;
+  }
+  catch ( error ) {
+    console.error(error);
+  }
+  finally {
+    newId = newId ? newId : 1; // Si no hay productos, el primer ID será 1
+  }
+
   const product = {
     id: newId,
+    idProducto: idProducto,
     precio: precio,
     stock: stock,
-    idProducto: idProducto
+    
   };
 
   try {

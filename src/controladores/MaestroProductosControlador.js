@@ -81,7 +81,7 @@ export const getProductoByEAN = async (req, res) => {
 // POST /maestroproductos
 export const createProducto = async (req, res) => {
   try {
-    const nuevoProducto = await maestroService.crearProductoCatalogo(req.body);
+    const nuevoProducto = await maestroService.crearProductoCatalogo( req.body );
     res.status(201).json(nuevoProducto);
   } catch (error) {
     res.status(400).json({ error: error.message });

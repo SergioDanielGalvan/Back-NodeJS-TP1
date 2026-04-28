@@ -172,7 +172,7 @@ export const crearRegistroCompra = async (req, res) => {
         const { idProducto, precioCompra, cantidad, fechaVencimiento } = req.body;
 
         // Validaciones mínimas
-        if (!idProducto || !precioCompra || !cantidad) {
+        if ( !idProducto || !precioCompra || !cantidad) {
             return res.status(400).json({ error: "Faltan datos obligatorios para la compra" });
         }
 
