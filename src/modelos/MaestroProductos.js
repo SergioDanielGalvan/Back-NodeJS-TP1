@@ -59,35 +59,39 @@ const leerArchivo = async () => {
   return JSON.parse(data);
 };
 
-const getAllProductos = async ( categoria ) => {
+const getAllProductos = async (categoria) => {
   try {
     const productos = await leerArchivo(); // ya lee MaestroProductos.json
-    if ( categoria ) {
-      return productos.filter( ( p ) =>
-        p.categorias && p.categorias.some(cat => cat.toLowerCase().includes(categoria.toLowerCase()))
+    if (categoria) {
+      return productos.filter(
+        (p) =>
+          p.categorias &&
+          p.categorias.some((cat) =>
+            cat.toLowerCase().includes(categoria.toLowerCase()),
+          ),
       );
-    }  
+    }
     return productos;
-
   } catch (error) {
     console.error(error);
+  } finally {
   }
-  finally {
-  }
-
 };
 
-const createProducto = async ( producto ) => {
+const createProducto = async (producto) => {
   const productos = await leerArchivo();
-  const newId = productos.length > 0 ? Math.max(...productos.map(p => p.idProducto)) + 1 : 1;
+  const newId =
+    productos.length > 0
+      ? Math.max(...productos.map((p) => p.idProducto)) + 1
+      : 1;
   const nuevoProducto = {
-    ...producto,  // Copia las propiedades del producto recibido, deconstruyo
+    ...producto, // Copia las propiedades del producto recibido, deconstruyo
     idProducto: newId,
     fechaAlta: new Date().toISOString(),
     operador: datos.operador || "sistema",
   };
   productos.push(nuevoProducto);
-  await escribirArchivo( productos );
+  await escribirArchivo(productos);
   return nuevoProducto;
 };
 
@@ -102,8 +106,5 @@ export default {
   actualizar,
   eliminar,
   getAllProductos,
-  createProducto
-};
-
-  createProducto
+  createProducto,
 };
