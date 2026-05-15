@@ -38,7 +38,7 @@ export const getAllProductos = async (req, res) => {
 export const getProductoById = async (id) => {
   try {
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
 
@@ -56,7 +56,7 @@ export const getProductoById = async (id) => {
 export const getProductoByNombre = async (nombre) => {
   try {
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
 
@@ -91,7 +91,7 @@ export const createProducto = async (nombre, precio, categorias, stock) => {
 
   // Verifico contra el maestro que el producto exista ya por nombre
   const data = await fs.readFile(
-    path.join(__dirname, "MaestroProductos.json"),
+    path.join(__dirname, "../data/MaestroProductos.json"),
     "utf-8",
   );
   const MaestroProductos = JSON.parse(data);
@@ -106,7 +106,7 @@ export const createProducto = async (nombre, precio, categorias, stock) => {
   // Busco un id único para el nuevo producto
   try {
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
     const productos = JSON.parse(data);
@@ -128,7 +128,7 @@ export const createProducto = async (nombre, precio, categorias, stock) => {
 
   try {
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
     const productos = JSON.parse(data);
@@ -136,7 +136,7 @@ export const createProducto = async (nombre, precio, categorias, stock) => {
     productos.push(producto); // Agrego el nuevo producto al array
 
     await fs.writeFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
       "utf-8",
     );
@@ -151,7 +151,7 @@ export const createProducto = async (nombre, precio, categorias, stock) => {
 export const deleteProductoById = async (id) => {
   try {
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
     const productos = JSON.parse(data);
@@ -161,7 +161,7 @@ export const deleteProductoById = async (id) => {
     }
     productos.splice(index, 1); // Elimino el producto del array
     await fs.writeFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
       "utf-8",
     );
@@ -176,7 +176,7 @@ export const deleteProductoById = async (id) => {
 export const getAllProductosWithStock = async (req, res) => {
   try {
     const dataStock = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
     const productosStock = JSON.parse(dataStock);
@@ -184,7 +184,7 @@ export const getAllProductosWithStock = async (req, res) => {
       (producto) => producto.stock > 0,
     );
     const dataMaestro = await fs.readFile(
-      path.join(__dirname, "MaestroProductos.json"),
+      path.join(__dirname, "../data/MaestroProductos.json"),
       "utf-8",
     );
     const productosMaestro = JSON.parse(dataMaestro);
@@ -209,7 +209,7 @@ export const getAllProductosWithStock = async (req, res) => {
 export const updateProductoWithStock = async (id, nuevoStock) => {
   try {
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
     const productos = JSON.parse(data);
@@ -219,7 +219,7 @@ export const updateProductoWithStock = async (id, nuevoStock) => {
     }
     productos[index].stock = nuevoStock; // Actualizo el stock del producto
     await fs.writeFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
       "utf-8",
     );
@@ -234,7 +234,7 @@ export const updateProductoWithStock = async (id, nuevoStock) => {
 export const updateProductoWithPrecio = async (id, nuevoPrecio) => {
   try {
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
     const productos = JSON.parse(data);
@@ -244,7 +244,7 @@ export const updateProductoWithPrecio = async (id, nuevoPrecio) => {
     }
     productos[index].precio = nuevoPrecio; // Actualizo el precio del producto
     await fs.writeFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       JSON.stringify(productos, null, 2), // Guardo el array actualizado en el archivo
       "utf-8",
     );
@@ -260,7 +260,7 @@ export const getAllProductosByCategoria = async (req, res) => {
   try {
     const { categoria } = req.query;
     const data = await fs.readFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       "utf-8",
     );
     const productos = JSON.parse(data);
@@ -268,7 +268,7 @@ export const getAllProductosByCategoria = async (req, res) => {
       producto.categorias.includes(categoria),
     );
     const dataMaestro = await fs.readFile(
-      path.join(__dirname, "MaestroProductos.json"),
+      path.join(__dirname, "../data/MaestroProductos.json"),
       "utf-8",
     );
     const productosMaestro = JSON.parse(dataMaestro);
@@ -311,7 +311,7 @@ export const registrarCompraLote = async (dataCompra) => {
     // 3. Guardar en el JSON
     productos.push(nuevoLote);
     await fs.writeFile(
-      path.join(__dirname, "Productos.json"),
+      path.join(__dirname, "../data/Productos.json"),
       JSON.stringify(productos, null, 2),
       "utf-8",
     );
