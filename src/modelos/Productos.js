@@ -43,8 +43,7 @@ export const getProductoById = async (id) => {
     );
 
     const productos = JSON.parse(data);
-
-    const producto = products.find((item) => item.id == id);
+    const producto = productos.find((item) => item.idLote == id);
 
     return producto;
   } catch (error) {
@@ -110,7 +109,7 @@ export const createProducto = async (nombre, precio, categorias, stock) => {
       "utf-8",
     );
     const productos = JSON.parse(data);
-    const ids = productos.map((producto) => producto.id);
+    const ids = productos.map((producto) => producto.idLote);
     const maxId = Math.max(...ids);
     const newId = maxId + 1;
   } catch (error) {
@@ -155,7 +154,7 @@ export const deleteProductoById = async (id) => {
       "utf-8",
     );
     const productos = JSON.parse(data);
-    const index = productos.findIndex((producto) => producto.id === id);
+    const index = productos.findIndex((producto) => producto.idLote === id);
     if (index === -1) {
       throw new Error("Producto no encontrado");
     }

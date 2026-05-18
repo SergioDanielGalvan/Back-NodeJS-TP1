@@ -78,6 +78,11 @@ const getAllProductos = async (categoria) => {
   }
 };
 
+const getProductoById = async (id) => {
+  const productos = await leerArchivo();
+  return productos.find((p) => String(p.idProducto) === String(id));
+};
+
 const createProducto = async (producto) => {
   const productos = await leerArchivo();
   const newId =
@@ -106,5 +111,6 @@ export default {
   actualizar,
   eliminar,
   getAllProductos,
+  getProductoById,
   createProducto,
 };

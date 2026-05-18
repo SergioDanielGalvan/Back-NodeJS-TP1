@@ -63,10 +63,13 @@ export const getProductoById = async ( req, res ) => {
   try {
     const { id } = req.params;
     const productoenStock = await modelProductos.getProductoById( id );
+    console.log("Producto:", productoenStock);
     if ( !productoenStock ) {
         return res.status(404).json({ error: "Producto en stock no encontrado" });
-    }   
+    }
+
     const productoEnMaestro = await modelMaestro.getProductoById( id );
+    console.log("Producto en Maestro:", productoEnMaestro);
     if ( !productoEnMaestro ) {
         return res.status(404).json({ error: "Producto en Maestro no encontrado" });
     }
