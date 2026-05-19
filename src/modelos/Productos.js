@@ -52,6 +52,58 @@ export const getProductoById = async (id) => {
   }
 };
 
+export const getProductoByIdProducto = async (idProducto) => {
+  try {
+    const data = await fs.readFile(
+      path.join(__dirname, "../data/Productos.json"),
+      "utf-8",
+    );
+
+    const productos = JSON.parse(data);
+    const producto = productos.find((item) => item.idProducto == idProducto);
+
+    return producto;
+  } catch (error) {
+    console.error(error);
+  } finally {
+  }
+};
+
+export const getAllProductoByNombre = async (nombre) => {
+  try {
+    const data = await fs.readFile(
+      path.join(__dirname, "../data/Productos.json"),
+      "utf-8",
+    );
+
+    const productos = JSON.parse(data);
+    const productosFiltrados = productos.filter((item) =>
+      item.nombre.toLowerCase().includes(nombre.toLowerCase()),
+    );
+
+    const dataMaestro = await fs.readFile(
+      path.join(__dirname, "../data/MaestroProductos.json"),
+      "utf-8",
+    );
+    const productosMaestro = JSON.parse(dataMaestro);
+    productosFiltrados.forEach( (producto) => {
+      const productoMaestro = productosMaestro.find(
+        (item) => item.idProducto === producto.idProducto,
+      );
+      if (productoMaestro) {
+        producto.nombre = productoMaestro.nombre;
+        producto.categorias = productoMaestro.categorias;
+        producto.EAN = productoMaestro.EAN;
+      }
+    } );
+    return productosFiltrados;
+  }
+  catch (error) {
+    console.error(error);
+  } finally {
+  }
+};
+
 export const getProductoByNombre = async (nombre) => {
   try {
     const data = await fs.readFile(
